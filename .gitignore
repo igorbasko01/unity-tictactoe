@@ -1,0 +1,84 @@
+# =============== #
+# Unity generated #
+# =============== #
+[Tt]emp/
+[Oo]bj/
+[Bb]uild
+[Bb]uilds/
+[Ll]ibrary/
+sysinfo.txt
+*.bak
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+[Ee]xported[Oo]bj/
+.vs/
+/*.userprefs
+/*.csproj
+/*.unityproj
+/*.sln
+/*.suo
+/*.tmp
+/*.user
+/*.userprefs
+/*.pidb
+/*.booproj
+/*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+[Tt]humbs.db
+
+# =============== #
+# User specific   #
+# =============== #
+*.sublime*
+*.idea*
+*.vscode*
+*.swp
+*.bak
+*.tmproj
+
+# =============== #
+# Specific Files  #
+# =============== #
+*.pidb.meta
+*.bak.meta
+
+# ============ #
+# Directories  #
+# ============ #
+Assets/AssetStoreTools*
+/[Bb]uild/
+/[Bb]uilds/
+
+# ========== #
+# Logs Files #
+# ========== #
+*.log
+
+# =================== #
+# Crashlytics meta   #
+# =================== #
+crashlytics-build.properties
+
+# ============= #
+# Package Files #
+# ============= #
+*.pidb
+*.bak
+# Never ignore Asset meta data
+!/[Aa]ssets/**/Metadata.meta
+
