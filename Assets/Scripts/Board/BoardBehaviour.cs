@@ -32,33 +32,12 @@ public class BoardBehaviour : MonoBehaviour
 
     private void registerCellsClick() {
         var buttons = GetComponentsInChildren<Button>();
-        buttons[0].onClick.AddListener(() => {
-            _boardUIEventsHandler.CellClick(0);
-        });
-        buttons[1].onClick.AddListener(() => {
-            _boardUIEventsHandler.CellClick(1);
-        });
-        buttons[2].onClick.AddListener(() => {
-            _boardUIEventsHandler.CellClick(2);
-        });
-        buttons[3].onClick.AddListener(() => {
-            _boardUIEventsHandler.CellClick(3);
-        });
-        buttons[4].onClick.AddListener(() => {
-            _boardUIEventsHandler.CellClick(4);
-        });
-        buttons[5].onClick.AddListener(() => {
-            _boardUIEventsHandler.CellClick(5);
-        });
-        buttons[6].onClick.AddListener(() => {
-            _boardUIEventsHandler.CellClick(6);
-        });
-        buttons[7].onClick.AddListener(() => {
-            _boardUIEventsHandler.CellClick(7);
-        });
-        buttons[8].onClick.AddListener(() => {
-            _boardUIEventsHandler.CellClick(8);
-        });
+        for (var i = 0; i < buttons.Length; i++) {
+            var index = i;  // for closure.
+            buttons[i].onClick.AddListener(() => {
+                _boardUIEventsHandler.CellClick(index);
+            });
+        }
     }
 
     public void OnCellStateChanged(int x, int y, PlayerMark playerMark) {
