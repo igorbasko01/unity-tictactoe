@@ -83,4 +83,22 @@ public class GameManagerTests {
         gameManager.StartGame();
         Assert.AreEqual(PlayerMark.X, playerMark);
     }
+
+    [Test]
+    public void SwitchCurrentPlayerOnValidMove() {
+        BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
+        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
+        BoardHandler boardHandler = new BoardHandler();
+        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler);
+        var playerMark = default(PlayerMark);
+        gameManager.OnCurrentPlayer += (nplayerMark) => {
+            playerMark = nplayerMark;
+        };
+        gameManager.StartGame();
+        Assert.AreEqual(PlayerMark.X, playerMark);
+        boardUIEventsHandler.CellClick(0);
+        Assert.AreEqual(PlayerMark.O, playerMark);
+        boardUIEventsHandler.CellClick(1);
+        Assert.AreEqual(PlayerMark.X, playerMark);
+    }
 }
