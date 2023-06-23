@@ -39,4 +39,25 @@ public class BoardHandlerTests {
         boardHandler.PerformMove(3, 0, PlayerMark.X);
         boardHandler.PerformMove(0, 3, PlayerMark.X);
     }
+
+    [Test]
+    public void PerformMoveInvokesOnCellStateChangedEvent() {
+        var boardHandler = new BoardHandler();
+        var numberOfInvocations = 0;
+        boardHandler.OnCellStateChanged += (x, y, playerMark) => { numberOfInvocations++; };
+        boardHandler.PerformMove(0, 0, PlayerMark.X);
+        Assert.AreEqual(1, numberOfInvocations);
+    }
+
+    [Test]
+    public void PerformMoveDoesntInvokeOnCellStateChangedEventIfInvalidCoordinates() {
+        var boardHandler = new BoardHandler();
+        var numberOfInvocations = 0;
+        boardHandler.OnCellStateChanged += (x, y, playerMark) => { numberOfInvocations++; };
+        boardHandler.PerformMove(-1, 0, PlayerMark.X);
+        boardHandler.PerformMove(0, -1, PlayerMark.X);
+        boardHandler.PerformMove(3, 0, PlayerMark.X);
+        boardHandler.PerformMove(0, 3, PlayerMark.X);
+        Assert.AreEqual(0, numberOfInvocations);
+    }
 }
