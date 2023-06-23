@@ -3,6 +3,7 @@ using System;
 public class GameManager {
     private readonly HumanPlayerHandler _humanPlayerHandler;
     private readonly BoardHandler _boardHandler;
+    private PlayerMark _currentPlayer;
     public event Action<int, int, PlayerMark> OnValidMove;
     public event Action<PlayerMark> OnCurrentPlayer;
     public GameManager(HumanPlayerHandler humanPlayerHandler, BoardHandler boardHandler) {
@@ -16,10 +17,17 @@ public class GameManager {
             return;
         }
         _boardHandler.PerformMove(x, y, playerMark);
+        switchCurrentPlayer();
         OnValidMove?.Invoke(x, y, playerMark);
     }
 
+    private void switchCurrentPlayer() {
+        _currentPlayer = _currentPlayer == PlayerMark.X ? PlayerMark.O : PlayerMark.X;
+        OnCurrentPlayer?.Invoke(_currentPlayer);
+    }
+
     public void StartGame() {
-        OnCurrentPlayer?.Invoke(PlayerMark.X);
+        _currentPlayer = PlayerMark.X;
+        OnCurrentPlayer?.Invoke(_currentPlayer);
     }
 }
