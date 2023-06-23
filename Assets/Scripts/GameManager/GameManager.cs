@@ -4,6 +4,7 @@ public class GameManager {
     private readonly HumanPlayerHandler _humanPlayerHandler;
     private readonly BoardHandler _boardHandler;
     public event Action<int, int, PlayerMark> OnValidMove;
+    public event Action<PlayerMark> OnCurrentPlayer;
     public GameManager(HumanPlayerHandler humanPlayerHandler, BoardHandler boardHandler) {
         _humanPlayerHandler = humanPlayerHandler;
         _boardHandler = boardHandler;
@@ -16,5 +17,9 @@ public class GameManager {
         }
         _boardHandler.PerformMove(x, y, playerMark);
         OnValidMove?.Invoke(x, y, playerMark);
+    }
+
+    public void StartGame() {
+        OnCurrentPlayer?.Invoke(PlayerMark.X);
     }
 }
