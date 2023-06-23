@@ -69,4 +69,18 @@ public class GameManagerTests {
         Assert.AreEqual(PlayerMark.X, playerMark);
         Assert.AreEqual(1, numberOfInvocations);
     }
+
+    [Test]
+    public void SendCurrentPlayerEventOnGameStart() {
+        BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
+        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
+        BoardHandler boardHandler = new BoardHandler();
+        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler);
+        var playerMark = default(PlayerMark);
+        gameManager.OnCurrentPlayer += (nplayerMark) => {
+            playerMark = nplayerMark;
+        };
+        gameManager.StartGame();
+        Assert.AreEqual(PlayerMark.X, playerMark);
+    }
 }
