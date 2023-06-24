@@ -13,12 +13,12 @@ public class GameManager {
     }
 
     private void OnPlayerPerformMove(int x, int y, PlayerMark playerMark) {
-        if (!_boardHandler.IsCellEmpty(x, y)) {
+        if (playerMark != _currentPlayer || !_boardHandler.IsCellEmpty(x, y)) {
             return;
         }
         _boardHandler.PerformMove(x, y, playerMark);
-        switchCurrentPlayer();
         OnValidMove?.Invoke(x, y, playerMark);
+        switchCurrentPlayer();
     }
 
     private void switchCurrentPlayer() {
