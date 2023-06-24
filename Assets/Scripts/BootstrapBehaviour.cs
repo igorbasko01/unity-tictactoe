@@ -19,6 +19,7 @@ public class BootstrapBehaviour : MonoBehaviour
         _gameManager = new GameManager(_humanPlayerHandler, _boardHandler);
         _boardBehaviour.SetBoardHandler(_boardHandler);
         _boardBehaviour.SetBoardUIEventsHandler(_boardUIEventsHandler);
+        _gameManager.StartGame();
     }
 
     // Update is called once per frame
