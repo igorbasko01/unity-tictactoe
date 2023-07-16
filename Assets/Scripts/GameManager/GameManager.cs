@@ -4,7 +4,17 @@ public class GameManager {
     private readonly HumanPlayerHandler _humanPlayerHandler;
     private readonly BoardHandler _boardHandler;
     private PlayerMark _currentPlayer;
+    /**
+     * This event is fired when a player performs a valid move.
+     * The first parameter is the x coordinate of the move.
+     * The second parameter is the y coordinate of the move.
+     * The third parameter is the mark of the player who performed the move.
+     */
     public event Action<int, int, PlayerMark> OnValidMove;
+    /**
+     * This event is fired when the current player changes.
+     * The parameter is the mark of the new current player.
+     */
     public event Action<PlayerMark> OnCurrentPlayer;
     public GameManager(HumanPlayerHandler humanPlayerHandler, BoardHandler boardHandler) {
         _humanPlayerHandler = humanPlayerHandler;

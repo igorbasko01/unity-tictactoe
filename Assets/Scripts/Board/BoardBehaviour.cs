@@ -40,7 +40,7 @@ public class BoardBehaviour : MonoBehaviour
         }
     }
 
-    public void OnCellStateChanged(int x, int y, PlayerMark playerMark) {
+    private void OnCellStateChanged(int x, int y, PlayerMark playerMark) {
         var cells = GetComponentsInChildren<Button>();
         var cellButton = cells[y * 3 + x];
         var cellText = cellButton.GetComponentInChildren<TextMeshProUGUI>();
