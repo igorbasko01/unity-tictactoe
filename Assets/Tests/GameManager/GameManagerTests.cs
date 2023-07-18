@@ -4,14 +4,15 @@ using NUnit.Framework;
 public class GameManagerTests {
     [Test]
     public void GameManagerListensForOnPerformMoveEventFromHumanPlayer() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
         BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
         HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
         BoardHandler boardHandler = new BoardHandler();
-        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler);
+        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler, gameManagerEvents);
         var x = -1;
         var y = -1;
         var playerMark = default(PlayerMark);
-        gameManager.OnValidMove += (nx, ny, nplayerMark) => {
+        gameManagerEvents.OnValidMove += (nx, ny, nplayerMark) => {
             x = nx;
             y = ny;
             playerMark = nplayerMark;
@@ -24,14 +25,15 @@ public class GameManagerTests {
 
     [Test]
     public void GameManagerPublishesOnValidMoveIfACellIsFree() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
         BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
         HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
         BoardHandler boardHandler = new BoardHandler();
-        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler);
+        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler, gameManagerEvents);
         var x = -1;
         var y = -1;
         var playerMark = default(PlayerMark);
-        gameManager.OnValidMove += (nx, ny, nplayerMark) => {
+        gameManagerEvents.OnValidMove += (nx, ny, nplayerMark) => {
             x = nx;
             y = ny;
             playerMark = nplayerMark;
@@ -44,15 +46,16 @@ public class GameManagerTests {
 
     [Test]
     public void GameManagerWontPublishOnValidMoveIfCellIsOccupied() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
         BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
         HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
         BoardHandler boardHandler = new BoardHandler();
-        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler);
+        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler, gameManagerEvents);
         var x = -1;
         var y = -1;
         var playerMark = default(PlayerMark);
         var numberOfInvocations = 0;
-        gameManager.OnValidMove += (nx, ny, nplayerMark) => {
+        gameManagerEvents.OnValidMove += (nx, ny, nplayerMark) => {
             x = nx;
             y = ny;
             playerMark = nplayerMark;
@@ -72,12 +75,13 @@ public class GameManagerTests {
 
     [Test]
     public void SendCurrentPlayerEventOnGameStart() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
         BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
         HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
         BoardHandler boardHandler = new BoardHandler();
-        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler);
-        var playerMark = default(PlayerMark);
-        gameManager.OnCurrentPlayer += (nplayerMark) => {
+        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler, gameManagerEvents);
+        var playerMark = PlayerMark.O;
+        gameManagerEvents.OnCurrentPlayer += (nplayerMark) => {
             playerMark = nplayerMark;
         };
         gameManager.StartGame();
@@ -86,12 +90,13 @@ public class GameManagerTests {
 
     [Test]
     public void SwitchCurrentPlayerOnValidMove() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
         BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
         HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
         BoardHandler boardHandler = new BoardHandler();
-        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler);
+        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler, gameManagerEvents);
         var playerMark = default(PlayerMark);
-        gameManager.OnCurrentPlayer += (nplayerMark) => {
+        gameManagerEvents.OnCurrentPlayer += (nplayerMark) => {
             playerMark = nplayerMark;
         };
         gameManager.StartGame();
@@ -102,15 +107,16 @@ public class GameManagerTests {
 
     [Test]
     public void GameManagerWontPublishOnValidMoveIfPlayingPlayerNotCurrent() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
         BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
         HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
         BoardHandler boardHandler = new BoardHandler();
-        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler);
+        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler, gameManagerEvents);
         var x = -1;
         var y = -1;
         var playerMark = default(PlayerMark);
         var numberOfInvocations = 0;
-        gameManager.OnValidMove += (nx, ny, nplayerMark) => {
+        gameManagerEvents.OnValidMove += (nx, ny, nplayerMark) => {
             x = nx;
             y = ny;
             playerMark = nplayerMark;
