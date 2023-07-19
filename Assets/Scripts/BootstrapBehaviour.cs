@@ -8,6 +8,7 @@ public class BootstrapBehaviour : MonoBehaviour
 
     private GameManagerEvents _gameManagerEvents;
     private BoardHandler _boardHandler;
+    private BoardHandlerEvents _boardHandlerEvents;
     private BoardUIEventsHandler _boardUIEventsHandler;
     private GameManager _gameManager;
     private HumanPlayerHandler _humanPlayerHandler;
@@ -15,14 +16,15 @@ public class BootstrapBehaviour : MonoBehaviour
     void Start()
     {
         _gameManagerEvents = new GameManagerEvents();
-        _boardHandler = new BoardHandler();
+        _boardHandlerEvents = new BoardHandlerEvents();
+        _boardHandler = new BoardHandler(_boardHandlerEvents);
         _boardUIEventsHandler = new BoardUIEventsHandler();
         _humanPlayerHandler = new HumanPlayerHandler(_boardUIEventsHandler);
         // TODO: Remove the _humanPlayerHandler parameter from the GameManager constructor.
         // No need for the _humanPlayerHandler to be passed to the GameManager, as the events
         // of the human player are in the GameEvents class.
         _gameManager = new GameManager(_humanPlayerHandler, _boardHandler, _gameManagerEvents);
-        _boardBehaviour.SetBoardHandler(_boardHandler);
+        _boardBehaviour.SetBoardHandlerEvents(_boardHandlerEvents);
         _boardBehaviour.SetBoardUIEventsHandler(_boardUIEventsHandler);
         _gameManager.StartGame();
     }

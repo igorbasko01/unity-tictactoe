@@ -8,7 +8,11 @@ public enum CellState {
 
 public class BoardHandler {
     private CellState[,] _board = new CellState[3, 3];
-    public event Action<int, int, PlayerMark> OnCellStateChanged;
+    private BoardHandlerEvents _boardHandlerEvents;
+
+    public BoardHandler(BoardHandlerEvents boardHandlerEvents) {
+        _boardHandlerEvents = boardHandlerEvents;
+    }
     public bool IsCellEmpty(int x, int y) {
         if (!isCoordinatesValid(x, y)) {
             return false;
@@ -21,7 +25,7 @@ public class BoardHandler {
             return;
         }
         _board[x, y] = playerMark == PlayerMark.X ? CellState.X : CellState.O;
-        OnCellStateChanged?.Invoke(x, y, playerMark);
+        _boardHandlerEvents?.InvokeOnCellStateChanged(x, y, playerMark);
     }
 
     private bool isCoordinatesValid(int x, int y) {

@@ -5,8 +5,11 @@ public class AIPlayerHandlerTests {
     [Test]
     public void AIPlayerReceivesOnCurrentPlayerEvent() {
         GameManagerEvents gameManagerEvents = new GameManagerEvents();
+        BoardHandlerEvents boardHandlerEvents = new BoardHandlerEvents();
         BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
-        GameManager gameManager = new GameManager(new HumanPlayerHandler(boardUIEventsHandler), new BoardHandler(), gameManagerEvents);
+        BoardHandler boardHandler = new BoardHandler(boardHandlerEvents);
+        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
+        GameManager gameManager = new GameManager(humanPlayerHandler, boardHandler, gameManagerEvents);
         
         boardUIEventsHandler.CellClick(0);
         PlayerMark actualPlayerMark = PlayerMark.X;
