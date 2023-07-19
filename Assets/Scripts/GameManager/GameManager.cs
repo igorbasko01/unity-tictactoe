@@ -2,13 +2,13 @@ using System;
 
 public class GameManager {
     private readonly GameManagerEvents _gameEvents;
-    private readonly HumanPlayerHandler _humanPlayerHandler;
+    private readonly PlayerEvents _playerEvents;
     private readonly BoardHandler _boardHandler;
     private PlayerMark _currentPlayer;
-    public GameManager(HumanPlayerHandler humanPlayerHandler, BoardHandler boardHandler, GameManagerEvents gameEvents) {
-        _humanPlayerHandler = humanPlayerHandler;
+    public GameManager(PlayerEvents playerEvents, BoardHandler boardHandler, GameManagerEvents gameEvents) {
+        _playerEvents = playerEvents;
         _boardHandler = boardHandler;
-        _humanPlayerHandler.OnPerformMove += OnPlayerPerformMove;
+        _playerEvents.OnPerformMove += OnPlayerPerformMove;
         _gameEvents = gameEvents;
     }
 

@@ -5,8 +5,8 @@ using UnityEngine;
 public class BootstrapBehaviour : MonoBehaviour
 {
     [SerializeField] private BoardBehaviour _boardBehaviour;
-
     private GameManagerEvents _gameManagerEvents;
+    private PlayerEvents _playerEvents;
     private BoardHandler _boardHandler;
     private BoardHandlerEvents _boardHandlerEvents;
     private BoardUIEventsHandler _boardUIEventsHandler;
@@ -17,13 +17,14 @@ public class BootstrapBehaviour : MonoBehaviour
     {
         _gameManagerEvents = new GameManagerEvents();
         _boardHandlerEvents = new BoardHandlerEvents();
+        _playerEvents = new PlayerEvents();
         _boardHandler = new BoardHandler(_boardHandlerEvents);
         _boardUIEventsHandler = new BoardUIEventsHandler();
-        _humanPlayerHandler = new HumanPlayerHandler(_boardUIEventsHandler);
+        _humanPlayerHandler = new HumanPlayerHandler(_boardUIEventsHandler, _playerEvents);
         // TODO: Remove the _humanPlayerHandler parameter from the GameManager constructor.
         // No need for the _humanPlayerHandler to be passed to the GameManager, as the events
         // of the human player are in the GameEvents class.
-        _gameManager = new GameManager(_humanPlayerHandler, _boardHandler, _gameManagerEvents);
+        _gameManager = new GameManager(_playerEvents, _boardHandler, _gameManagerEvents);
         _boardBehaviour.SetBoardHandlerEvents(_boardHandlerEvents);
         _boardBehaviour.SetBoardUIEventsHandler(_boardUIEventsHandler);
         _gameManager.StartGame();

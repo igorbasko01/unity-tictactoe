@@ -3,12 +3,13 @@ using NUnit.Framework;
 public class HumanPlayerHandlerTests {
     [Test]
     public void HumanPlayerInvokePerformMoveEvent() {
+        PlayerEvents playerEvents = new PlayerEvents();
         BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
-        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler);
+        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler, playerEvents);
         PlayerMark playerMark = default;
         int x = -1;
         int y = -1;
-        humanPlayerHandler.OnPerformMove += (nx, ny, nplayerMark) => {
+        playerEvents.OnPerformMove += (nx, ny, nplayerMark) => {
             x = nx;
             y = ny;
             playerMark = nplayerMark;
