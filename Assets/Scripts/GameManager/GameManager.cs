@@ -1,15 +1,15 @@
-using System;
+using UnityEngine;
 
 public class GameManager {
-    private readonly HumanPlayerHandler _humanPlayerHandler;
+    private readonly GameManagerEvents _gameEvents;
+    private readonly PlayerEvents _playerEvents;
     private readonly BoardHandler _boardHandler;
     private PlayerMark _currentPlayer;
-    public event Action<int, int, PlayerMark> OnValidMove;
-    public event Action<PlayerMark> OnCurrentPlayer;
-    public GameManager(HumanPlayerHandler humanPlayerHandler, BoardHandler boardHandler) {
-        _humanPlayerHandler = humanPlayerHandler;
+    public GameManager(PlayerEvents playerEvents, BoardHandler boardHandler, GameManagerEvents gameEvents) {
+        _playerEvents = playerEvents;
         _boardHandler = boardHandler;
-        _humanPlayerHandler.OnPerformMove += OnPlayerPerformMove;
+        _playerEvents.OnPerformMove += OnPlayerPerformMove;
+        _gameEvents = gameEvents;
     }
 
     private void OnPlayerPerformMove(int x, int y, PlayerMark playerMark) {
@@ -17,17 +17,17 @@ public class GameManager {
             return;
         }
         _boardHandler.PerformMove(x, y, playerMark);
-        OnValidMove?.Invoke(x, y, playerMark);
+        _gameEvents?.InvokeOnValidMove(x, y, playerMark);
         switchCurrentPlayer();
     }
 
     private void switchCurrentPlayer() {
         _currentPlayer = _currentPlayer == PlayerMark.X ? PlayerMark.O : PlayerMark.X;
-        OnCurrentPlayer?.Invoke(_currentPlayer);
+        _gameEvents?.InvokeOnCurrentPlayer(_currentPlayer);
     }
 
     public void StartGame() {
         _currentPlayer = PlayerMark.X;
-        OnCurrentPlayer?.Invoke(_currentPlayer);
+        _gameEvents?.InvokeOnCurrentPlayer(_currentPlayer);
     }
 }

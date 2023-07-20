@@ -1,12 +1,14 @@
 using System;
 public class HumanPlayerHandler {
-    public event Action<int, int, PlayerMark> OnPerformMove;
-    public HumanPlayerHandler(BoardUIEventsHandler boardUIEventsHandler) {
+    private PlayerEvents _playerEvents;
+
+    public HumanPlayerHandler(BoardUIEventsHandler boardUIEventsHandler, PlayerEvents playerEvents) {
+        _playerEvents = playerEvents;
         boardUIEventsHandler.OnCellClicked += OnCellClicked;
     }
 
-    public void OnCellClicked(int x, int y) {
-        OnPerformMove?.Invoke(x, y, PlayerMark.X);
+    private void OnCellClicked(int x, int y) {
+        _playerEvents?.InvokeOnPerformMove(x, y, PlayerMark.X);
     }
 }
 

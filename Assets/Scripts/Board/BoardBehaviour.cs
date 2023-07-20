@@ -4,7 +4,7 @@ using TMPro;
 
 public class BoardBehaviour : MonoBehaviour
 {
-    private BoardHandler _boardHandler;
+    private BoardHandlerEvents _boardHandlerEvents;
     private BoardUIEventsHandler _boardUIEventsHandler;
 
     // Start is called before the first frame update
@@ -19,10 +19,10 @@ public class BoardBehaviour : MonoBehaviour
         
     }
 
-    public void SetBoardHandler(BoardHandler boardHandler) {
-        _boardHandler = boardHandler;
-        _boardHandler.OnCellStateChanged -= OnCellStateChanged;
-        _boardHandler.OnCellStateChanged += OnCellStateChanged;
+    public void SetBoardHandlerEvents(BoardHandlerEvents boardHandlerEvents) {
+        _boardHandlerEvents = boardHandlerEvents;
+        _boardHandlerEvents.OnCellStateChanged -= OnCellStateChanged;
+        _boardHandlerEvents.OnCellStateChanged += OnCellStateChanged;
     }
 
     public void SetBoardUIEventsHandler(BoardUIEventsHandler boardUIEventsHandler) {
@@ -40,7 +40,7 @@ public class BoardBehaviour : MonoBehaviour
         }
     }
 
-    public void OnCellStateChanged(int x, int y, PlayerMark playerMark) {
+    private void OnCellStateChanged(int x, int y, PlayerMark playerMark) {
         var cells = GetComponentsInChildren<Button>();
         var cellButton = cells[y * 3 + x];
         var cellText = cellButton.GetComponentInChildren<TextMeshProUGUI>();

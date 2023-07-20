@@ -5,19 +5,26 @@ using UnityEngine;
 public class BootstrapBehaviour : MonoBehaviour
 {
     [SerializeField] private BoardBehaviour _boardBehaviour;
-
+    private GameManagerEvents _gameManagerEvents;
+    private PlayerEvents _playerEvents;
     private BoardHandler _boardHandler;
+    private BoardHandlerEvents _boardHandlerEvents;
     private BoardUIEventsHandler _boardUIEventsHandler;
     private GameManager _gameManager;
     private HumanPlayerHandler _humanPlayerHandler;
+    private AIPlayerHandler _aiPlayerHandler;
     // Start is called before the first frame update
     void Start()
     {
-        _boardHandler = new BoardHandler();
+        _gameManagerEvents = new GameManagerEvents();
+        _boardHandlerEvents = new BoardHandlerEvents();
+        _playerEvents = new PlayerEvents();
+        _boardHandler = new BoardHandler(_boardHandlerEvents);
         _boardUIEventsHandler = new BoardUIEventsHandler();
-        _humanPlayerHandler = new HumanPlayerHandler(_boardUIEventsHandler);
-        _gameManager = new GameManager(_humanPlayerHandler, _boardHandler);
-        _boardBehaviour.SetBoardHandler(_boardHandler);
+        _humanPlayerHandler = new HumanPlayerHandler(_boardUIEventsHandler, _playerEvents);
+        _aiPlayerHandler = new AIPlayerHandler(_gameManagerEvents, _boardHandler, _playerEvents);
+        _gameManager = new GameManager(_playerEvents, _boardHandler, _gameManagerEvents);
+        _boardBehaviour.SetBoardHandlerEvents(_boardHandlerEvents);
         _boardBehaviour.SetBoardUIEventsHandler(_boardUIEventsHandler);
         _gameManager.StartGame();
     }
