@@ -12,6 +12,7 @@ public class BootstrapBehaviour : MonoBehaviour
     private BoardUIEventsHandler _boardUIEventsHandler;
     private GameManager _gameManager;
     private HumanPlayerHandler _humanPlayerHandler;
+    private AIPlayerHandler _aiPlayerHandler;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,9 +22,7 @@ public class BootstrapBehaviour : MonoBehaviour
         _boardHandler = new BoardHandler(_boardHandlerEvents);
         _boardUIEventsHandler = new BoardUIEventsHandler();
         _humanPlayerHandler = new HumanPlayerHandler(_boardUIEventsHandler, _playerEvents);
-        // TODO: Remove the _humanPlayerHandler parameter from the GameManager constructor.
-        // No need for the _humanPlayerHandler to be passed to the GameManager, as the events
-        // of the human player are in the GameEvents class.
+        _aiPlayerHandler = new AIPlayerHandler(_gameManagerEvents, _boardHandler, _playerEvents);
         _gameManager = new GameManager(_playerEvents, _boardHandler, _gameManagerEvents);
         _boardBehaviour.SetBoardHandlerEvents(_boardHandlerEvents);
         _boardBehaviour.SetBoardUIEventsHandler(_boardUIEventsHandler);
