@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 public class PlayerEvents {
     /**
      * This event is fired when the player clicks on a cell.
@@ -14,6 +15,7 @@ public class PlayerEvents {
     }
 
     public void InvokeOnPerformMove(int x, int y, PlayerMark playerMark) {
+        Debug.Log($"Performed move: {playerMark}");
         _onPerformMove?.Invoke(x, y, playerMark);
     }
 

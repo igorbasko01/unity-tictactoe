@@ -31,4 +31,15 @@ public class BoardHandler {
     private bool isCoordinatesValid(int x, int y) {
         return x >= 0 && x < 3 && y >= 0 && y < 3;
     }
+
+    public (int, int) GetFirstEmptyCell() {
+        for (var x = 0; x < 3; x++) {
+            for (var y = 0; y < 3; y++) {
+                if (_board[x, y] == CellState.Empty) {
+                    return (x, y);
+                }
+            }
+        }
+        throw new ArgumentException("Board is full");
+    }
 }

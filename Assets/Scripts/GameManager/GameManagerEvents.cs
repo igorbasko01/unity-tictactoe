@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 public class GameManagerEvents {
     private event Action<int, int, PlayerMark> _onValidMove;
     public event Action<int, int, PlayerMark> OnValidMove {
@@ -15,6 +16,7 @@ public class GameManagerEvents {
         remove => _onCurrentPlayer -= value;
     }
     public void InvokeOnCurrentPlayer(PlayerMark playerMark) {
+        Debug.Log($"Next Player: {playerMark}");
         _onCurrentPlayer?.Invoke(playerMark);
     }
 }
