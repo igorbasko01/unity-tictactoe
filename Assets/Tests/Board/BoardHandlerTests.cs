@@ -67,4 +67,23 @@ public class BoardHandlerTests {
         boardHandler.PerformMove(0, 3, PlayerMark.X);
         Assert.AreEqual(0, numberOfInvocations);
     }
+
+    [Test]
+    public void GetAllFreeCellsReturnsAllCellsWhenBoardIsEmpty() {
+        var boardHandlerEvents = new BoardHandlerEvents();
+        var boardHandler = new BoardHandler(boardHandlerEvents);
+        var freeCells = boardHandler.GetAllFreeCells();
+        Assert.AreEqual(9, freeCells.Count);
+    }
+
+    [Test]
+    public void GetAllFreeCellsReturnsSomeCellsWhenBoardHasSomeCellsOccupied() {
+        var boardHandlerEvents = new BoardHandlerEvents();
+        var boardHandler = new BoardHandler(boardHandlerEvents);
+        boardHandler.PerformMove(0, 0, PlayerMark.X);
+        boardHandler.PerformMove(1, 1, PlayerMark.O);
+        boardHandler.PerformMove(2, 2, PlayerMark.X);
+        var freeCells = boardHandler.GetAllFreeCells();
+        Assert.AreEqual(6, freeCells.Count);
+    }
 }
