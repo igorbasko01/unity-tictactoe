@@ -3,9 +3,15 @@ public class AIPlayerHandler {
     private readonly PlayerMark _playerMark = PlayerMark.O;
     private readonly BoardHandler _boardHandler;
     private readonly PlayerEvents _playerEvents;
-    public AIPlayerHandler(GameManagerEvents gameManagerEvents, BoardHandler boardHandler, PlayerEvents playerEvents) {
+    private readonly IMovementLogic _movementLogic;
+    public AIPlayerHandler(
+        GameManagerEvents gameManagerEvents, 
+        BoardHandler boardHandler, 
+        PlayerEvents playerEvents, 
+        IMovementLogic movementLogic) {
         _boardHandler = boardHandler;
         _playerEvents = playerEvents;
+        _movementLogic = movementLogic;
         gameManagerEvents.OnCurrentPlayer += OnCurrentPlayer;
     }
 
@@ -14,16 +20,7 @@ public class AIPlayerHandler {
             return;
         }
         
-        var (x, y) = SelectCellToMove();
+        var (x, y) = _movementLogic.SelectCellToMove(_boardHandler);
         _playerEvents?.InvokeOnPerformMove(x, y, _playerMark);
-    }
-
-    private (int, int) SelectCellToMove() {
-        var allFreeCells = _boardHandler.GetAllFreeCells();
-        if (allFreeCells.Count == 0) {
-            throw new System.Exception("No free cells to move to.");
-        }
-        var randomIndex = Random.Range(0, allFreeCells.Count);
-        return allFreeCells[randomIndex];
     }
 }

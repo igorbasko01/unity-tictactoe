@@ -55,4 +55,44 @@ public class BoardHandler {
         }
         return freeCells;
     }
+
+    public bool IsDraw() {
+        return GetAllFreeCells().Count == 0;
+    }
+
+    public bool IsWin() {
+        return IsWinForPlayer(PlayerMark.X) || IsWinForPlayer(PlayerMark.O);
+    }
+
+    private bool IsWinForPlayer(PlayerMark playerMark) {
+        return IsWinForPlayerInRow(playerMark) || IsWinForPlayerInColumn(playerMark) || IsWinForPlayerInDiagonal(playerMark);
+    }
+
+    private bool IsWinForPlayerInRow(PlayerMark playerMark) {
+        for (var x = 0; x < 3; x++) {
+            if (_board[x, 0] == _board[x, 1] && _board[x, 1] == _board[x, 2] && _board[x, 2] == (playerMark == PlayerMark.X ? CellState.X : CellState.O)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsWinForPlayerInColumn(PlayerMark playerMark) {
+        for (var y = 0; y < 3; y++) {
+            if (_board[0, y] == _board[1, y] && _board[1, y] == _board[2, y] && _board[2, y] == (playerMark == PlayerMark.X ? CellState.X : CellState.O)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsWinForPlayerInDiagonal(PlayerMark playerMark) {
+        if (_board[0, 0] == _board[1, 1] && _board[1, 1] == _board[2, 2] && _board[2, 2] == (playerMark == PlayerMark.X ? CellState.X : CellState.O)) {
+            return true;
+        }
+        if (_board[0, 2] == _board[1, 1] && _board[1, 1] == _board[2, 0] && _board[2, 0] == (playerMark == PlayerMark.X ? CellState.X : CellState.O)) {
+            return true;
+        }
+        return false;
+    }
 }

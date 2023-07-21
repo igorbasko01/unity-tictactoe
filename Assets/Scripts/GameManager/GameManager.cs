@@ -18,7 +18,26 @@ public class GameManager {
         }
         _boardHandler.PerformMove(x, y, playerMark);
         _gameEvents?.InvokeOnValidMove(x, y, playerMark);
-        switchCurrentPlayer();
+        HandleNextMove(playerMark);
+    }
+    
+    private void HandleNextMove(PlayerMark playerMark) {
+        var endGameCondition = checkEndGameCondition();
+        if (endGameCondition != EndGameCondition.StillPlaying) {
+            _gameEvents?.InvokeOnEndGame(endGameCondition, playerMark);
+        } else {
+            switchCurrentPlayer();
+        }
+    }
+
+    private EndGameCondition checkEndGameCondition() {
+        if (_boardHandler.IsWin()) {
+            return EndGameCondition.Win;
+        }
+        if (_boardHandler.IsDraw()) {
+            return EndGameCondition.Draw;
+        }
+        return EndGameCondition.StillPlaying;
     }
 
     private void switchCurrentPlayer() {
@@ -30,4 +49,10 @@ public class GameManager {
         _currentPlayer = PlayerMark.X;
         _gameEvents?.InvokeOnCurrentPlayer(_currentPlayer);
     }
+}
+
+public enum EndGameCondition {
+    Win,
+    Draw,
+    StillPlaying,
 }
