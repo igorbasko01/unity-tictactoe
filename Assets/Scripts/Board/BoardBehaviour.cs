@@ -28,11 +28,15 @@ public class BoardBehaviour : MonoBehaviour
         }
     }
 
-    private void OnCellStateChanged(int x, int y, PlayerMark playerMark) {
+    private void OnCellStateChanged(int x, int y, CellState cellState) {
         var cells = GetComponentsInChildren<Button>();
         var cellButton = cells[y * 3 + x];
         var cellText = cellButton.GetComponentInChildren<TextMeshProUGUI>();
-        cellText.text = playerMark == PlayerMark.X ? "X" : "O";
-        cellButton.interactable = false;
+        cellText.text = cellState == CellState.X ? "X" : cellState == CellState.O ? "O" : "";
+        if (cellState == CellState.Empty) {
+            cellButton.interactable = true;
+        } else {
+            cellButton.interactable = false;
+        }
     }
 }

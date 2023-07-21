@@ -25,8 +25,9 @@ public class BoardHandler {
         if (!isCoordinatesValid(x, y)) {
             return;
         }
-        _board[x, y] = playerMark == PlayerMark.X ? CellState.X : CellState.O;
-        _boardHandlerEvents?.InvokeOnCellStateChanged(x, y, playerMark);
+        var cellState = playerMark == PlayerMark.X ? CellState.X : CellState.O; 
+        _board[x, y] = cellState;
+        _boardHandlerEvents?.InvokeOnCellStateChanged(x, y, cellState);
     }
 
     private bool isCoordinatesValid(int x, int y) {
@@ -100,6 +101,7 @@ public class BoardHandler {
         for (var x = 0; x < 3; x++) {
             for (var y = 0; y < 3;  y++) {
                 _board[x, y] = CellState.Empty;
+                _boardHandlerEvents.InvokeOnCellStateChanged(x, y, CellState.Empty);
             }
         }
     }
