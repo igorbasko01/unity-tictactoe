@@ -13,16 +13,18 @@ public class BootstrapBehaviour : MonoBehaviour
     private GameManager _gameManager;
     private HumanPlayerHandler _humanPlayerHandler;
     private AIPlayerHandler _aiPlayerHandler;
+    private IMovementLogic _aiMovementLogic;
     // Start is called before the first frame update
     void Start()
     {
         _gameManagerEvents = new GameManagerEvents();
         _boardHandlerEvents = new BoardHandlerEvents();
         _playerEvents = new PlayerEvents();
+        _aiMovementLogic = new RandomMovementLogic();
         _boardHandler = new BoardHandler(_boardHandlerEvents);
         _boardUIEventsHandler = new BoardUIEventsHandler();
         _humanPlayerHandler = new HumanPlayerHandler(_boardUIEventsHandler, _playerEvents);
-        _aiPlayerHandler = new AIPlayerHandler(_gameManagerEvents, _boardHandler, _playerEvents);
+        _aiPlayerHandler = new AIPlayerHandler(_gameManagerEvents, _boardHandler, _playerEvents, _aiMovementLogic);
         _gameManager = new GameManager(_playerEvents, _boardHandler, _gameManagerEvents);
         _boardBehaviour.SetBoardHandlerEvents(_boardHandlerEvents);
         _boardBehaviour.SetBoardUIEventsHandler(_boardUIEventsHandler);

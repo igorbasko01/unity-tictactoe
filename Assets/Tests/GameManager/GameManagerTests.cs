@@ -142,4 +142,118 @@ public class GameManagerTests {
         boardUIEventsHandler.CellClick(1);
         Assert.AreEqual(1, numberOfInvocations);  // still the same, means the event was not invoked
     }
+
+    [Test]
+    public void InvokeDrawEndGameCondition() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
+        PlayerEvents playerEvents = new PlayerEvents();
+        BoardHandlerEvents boardHandlerEvents = new BoardHandlerEvents();
+        BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
+        IMovementLogic movementLogic = new FreeEmptyCellMovementLogic();
+        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler, playerEvents);
+        BoardHandler boardHandler = new BoardHandler(boardHandlerEvents);
+        AIPlayerHandler aiPlayerHandler = new AIPlayerHandler(gameManagerEvents, boardHandler, playerEvents, movementLogic);
+        GameManager gameManager = new GameManager(playerEvents, boardHandler, gameManagerEvents);
+        var numberOfInvocations = 0;
+        var playerMark = default(PlayerMark);
+        var endGameCondition = default(EndGameCondition);
+        gameManagerEvents.OnEndGame += (gameCondition, player) => {
+            playerMark = player;
+            endGameCondition = gameCondition;
+            numberOfInvocations++;
+        };
+        gameManager.StartGame();
+        boardUIEventsHandler.CellClick(4);
+        boardUIEventsHandler.CellClick(3);
+        boardUIEventsHandler.CellClick(1);
+        boardUIEventsHandler.CellClick(2);
+        boardUIEventsHandler.CellClick(8);
+        Assert.AreEqual(1, numberOfInvocations);
+        Assert.AreEqual(PlayerMark.X, playerMark);
+        Assert.AreEqual(EndGameCondition.Draw, endGameCondition);
+    }
+
+    [Test]
+    public void InvokeRowWinEndGameCondition() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
+        PlayerEvents playerEvents = new PlayerEvents();
+        BoardHandlerEvents boardHandlerEvents = new BoardHandlerEvents();
+        BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
+        IMovementLogic movementLogic = new FreeEmptyCellMovementLogic();
+        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler, playerEvents);
+        BoardHandler boardHandler = new BoardHandler(boardHandlerEvents);
+        AIPlayerHandler aiPlayerHandler = new AIPlayerHandler(gameManagerEvents, boardHandler, playerEvents, movementLogic);
+        GameManager gameManager = new GameManager(playerEvents, boardHandler, gameManagerEvents);
+        var numberOfInvocations = 0;
+        var playerMark = default(PlayerMark);
+        var endGameCondition = default(EndGameCondition);
+        gameManagerEvents.OnEndGame += (gameCondition, player) => {
+            playerMark = player;
+            endGameCondition = gameCondition;
+            numberOfInvocations++;
+        };
+        gameManager.StartGame();
+        boardUIEventsHandler.CellClick(0);
+        boardUIEventsHandler.CellClick(1);
+        boardUIEventsHandler.CellClick(2);
+        Assert.AreEqual(1, numberOfInvocations);
+        Assert.AreEqual(PlayerMark.X, playerMark);
+        Assert.AreEqual(EndGameCondition.Win, endGameCondition);
+    }
+
+    [Test]
+    public void InvokeColumnWinEndGameCondition() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
+        PlayerEvents playerEvents = new PlayerEvents();
+        BoardHandlerEvents boardHandlerEvents = new BoardHandlerEvents();
+        BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
+        IMovementLogic movementLogic = new FreeEmptyCellMovementLogic();
+        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler, playerEvents);
+        BoardHandler boardHandler = new BoardHandler(boardHandlerEvents);
+        AIPlayerHandler aiPlayerHandler = new AIPlayerHandler(gameManagerEvents, boardHandler, playerEvents, movementLogic);
+        GameManager gameManager = new GameManager(playerEvents, boardHandler, gameManagerEvents);
+        var numberOfInvocations = 0;
+        var playerMark = default(PlayerMark);
+        var endGameCondition = default(EndGameCondition);
+        gameManagerEvents.OnEndGame += (gameCondition, player) => {
+            playerMark = player;
+            endGameCondition = gameCondition;
+            numberOfInvocations++;
+        };
+        gameManager.StartGame();
+        boardUIEventsHandler.CellClick(2);
+        boardUIEventsHandler.CellClick(5);
+        boardUIEventsHandler.CellClick(8);
+        Assert.AreEqual(1, numberOfInvocations);
+        Assert.AreEqual(PlayerMark.X, playerMark);
+        Assert.AreEqual(EndGameCondition.Win, endGameCondition);
+    }
+
+    [Test]
+    public void InvokeDiagonalWinEndGameCondition() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
+        PlayerEvents playerEvents = new PlayerEvents();
+        BoardHandlerEvents boardHandlerEvents = new BoardHandlerEvents();
+        BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
+        IMovementLogic movementLogic = new FreeEmptyCellMovementLogic();
+        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler, playerEvents);
+        BoardHandler boardHandler = new BoardHandler(boardHandlerEvents);
+        AIPlayerHandler aiPlayerHandler = new AIPlayerHandler(gameManagerEvents, boardHandler, playerEvents, movementLogic);
+        GameManager gameManager = new GameManager(playerEvents, boardHandler, gameManagerEvents);
+        var numberOfInvocations = 0;
+        var playerMark = default(PlayerMark);
+        var endGameCondition = default(EndGameCondition);
+        gameManagerEvents.OnEndGame += (gameCondition, player) => {
+            playerMark = player;
+            endGameCondition = gameCondition;
+            numberOfInvocations++;
+        };
+        gameManager.StartGame();
+        boardUIEventsHandler.CellClick(0);
+        boardUIEventsHandler.CellClick(4);
+        boardUIEventsHandler.CellClick(8);
+        Assert.AreEqual(1, numberOfInvocations);
+        Assert.AreEqual(PlayerMark.X, playerMark);
+        Assert.AreEqual(EndGameCondition.Win, endGameCondition);
+    }
 }

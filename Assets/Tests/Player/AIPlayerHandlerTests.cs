@@ -10,8 +10,9 @@ public class AIPlayerHandlerTests {
         BoardHandlerEvents boardHandlerEvents = new BoardHandlerEvents();
         BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
         BoardHandler boardHandler = new BoardHandler(boardHandlerEvents);
+        IMovementLogic movementLogic = new FreeEmptyCellMovementLogic();
         HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler, playerEvents);
-        AIPlayerHandler aiPlayerHandler = new AIPlayerHandler(gameManagerEvents, boardHandler, playerEvents);
+        AIPlayerHandler aiPlayerHandler = new AIPlayerHandler(gameManagerEvents, boardHandler, playerEvents, movementLogic);
         GameManager gameManager = new GameManager(playerEvents, boardHandler, gameManagerEvents);
         PlayerMark actualPlayerMark = PlayerMark.X;
         
