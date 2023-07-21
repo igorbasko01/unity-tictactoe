@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public enum CellState {
     Empty,
@@ -41,5 +42,17 @@ public class BoardHandler {
             }
         }
         throw new ArgumentException("Board is full");
+    }
+
+    public List<(int, int)> GetAllFreeCells() {
+        var freeCells = new List<(int, int)>();
+        for (var x = 0; x < 3; x++) {
+            for (var y = 0; y < 3; y++) {
+                if (_board[x, y] == CellState.Empty) {
+                    freeCells.Add((x, y));
+                }
+            }
+        }
+        return freeCells;
     }
 }
