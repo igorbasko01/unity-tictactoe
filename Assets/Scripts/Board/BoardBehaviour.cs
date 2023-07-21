@@ -7,18 +7,6 @@ public class BoardBehaviour : MonoBehaviour
     private BoardHandlerEvents _boardHandlerEvents;
     private BoardUIEventsHandler _boardUIEventsHandler;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetBoardHandlerEvents(BoardHandlerEvents boardHandlerEvents) {
         _boardHandlerEvents = boardHandlerEvents;
         _boardHandlerEvents.OnCellStateChanged -= OnCellStateChanged;
