@@ -11,14 +11,14 @@ public class AgainButtonBehavior : MonoBehaviour
         _gameManagerEvents = gameManagerEvents;
         _gameManagerEvents.OnEndGame += ShowButton;
         if (_againButton != null) {
-            _againButton.onClick.AddListener(HideButton);
+            _againButton.onClick.AddListener(RestartAndHideButton);
         }
     }
 
     public void OnDestroy() {
         _gameManagerEvents.OnEndGame -= ShowButton;
         if (_againButton != null) {
-            _againButton.onClick.RemoveListener(HideButton);
+            _againButton.onClick.RemoveListener(RestartAndHideButton);
         }
     }
 
@@ -29,10 +29,11 @@ public class AgainButtonBehavior : MonoBehaviour
         _againButton.gameObject.SetActive(true);
     }
 
-    private void HideButton() {
+    private void RestartAndHideButton() {
         if (_againButton == null) {
             return;
         }
+        _gameManagerEvents.InvokeOnRestartGame();
         _againButton.gameObject.SetActive(false);
     }
 }
