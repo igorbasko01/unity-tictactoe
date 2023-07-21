@@ -10,6 +10,7 @@ public class GameManager {
         _boardHandler = boardHandler;
         _playerEvents.OnPerformMove += OnPlayerPerformMove;
         _gameEvents = gameEvents;
+        _gameEvents.OnRestartGame += RestartGame;
     }
 
     private void OnPlayerPerformMove(int x, int y, PlayerMark playerMark) {
@@ -48,6 +49,11 @@ public class GameManager {
     public void StartGame() {
         _currentPlayer = PlayerMark.X;
         _gameEvents?.InvokeOnCurrentPlayer(_currentPlayer);
+    }
+
+    private void RestartGame() {
+        _boardHandler.ClearBoard();
+        StartGame();
     }
 }
 

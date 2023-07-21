@@ -102,4 +102,18 @@ public class BoardHandlerTests {
         boardHandler.PerformMove(2, 2, PlayerMark.X);
         Assert.IsTrue(boardHandler.IsDraw());
     }
+
+    [Test]
+    public void BoardClearsAllCellsOnBoardClear() {
+        var boardHandlerEvents = new BoardHandlerEvents();
+        var boardHandler = new BoardHandler(boardHandlerEvents);
+        boardHandler.PerformMove(0, 0, PlayerMark.X);
+        boardHandler.PerformMove(0, 1, PlayerMark.O);
+        boardHandler.PerformMove(0, 2, PlayerMark.X);
+        boardHandler.PerformMove(1, 0, PlayerMark.O);
+        boardHandler.PerformMove(1, 1, PlayerMark.X);
+        boardHandler.PerformMove(1, 2, PlayerMark.O);
+        boardHandler.ClearBoard();
+        Assert.IsTrue(boardHandler.GetAllFreeCells().Count == 9);
+    }
 }

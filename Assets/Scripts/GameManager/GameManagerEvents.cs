@@ -4,6 +4,7 @@ public class GameManagerEvents {
     private event Action<int, int, PlayerMark> _onValidMove;
     private event Action<PlayerMark> _onCurrentPlayer;
     private event Action<EndGameCondition, PlayerMark> _onEndGame;
+    private event Action _onRestartGame;
     public event Action<int, int, PlayerMark> OnValidMove {
         add => _onValidMove += value;
         remove => _onValidMove -= value;
@@ -26,5 +27,12 @@ public class GameManagerEvents {
     public void InvokeOnEndGame(EndGameCondition endGameCondition, PlayerMark playerMark) {
         Debug.Log($"End Game: {endGameCondition}, {playerMark}");
         _onEndGame?.Invoke(endGameCondition, playerMark);
+    }
+    public event Action OnRestartGame {
+        add => _onRestartGame += value;
+        remove => _onRestartGame -= value;
+    }
+    public void InvokeOnRestartGame() {
+        _onRestartGame?.Invoke();
     }
 }

@@ -95,4 +95,12 @@ public class BoardHandler {
         }
         return false;
     }
+
+    public void ClearBoard() {
+        for (var x = 0; x < 3; x++) {
+            for (var y = 0; y < 3;  y++) {
+                _board[x, y] = CellState.Empty;
+            }
+        }
+    }
 }
