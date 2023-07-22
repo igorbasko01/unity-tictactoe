@@ -88,3 +88,8 @@ crashlytics-build.properties
 *.apk
 *_BurstDebugInformation_*
 
+# ============ #
+# Crash Files  #
+# ============ #
+*.blob
+
