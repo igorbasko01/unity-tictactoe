@@ -5,6 +5,7 @@ using UnityEngine;
 public class BootstrapBehaviour : MonoBehaviour
 {
     [SerializeField] private BoardBehaviour _boardBehaviour;
+    [SerializeField] private AgainButtonBehavior _againButtonBehavior;
     private GameManagerEvents _gameManagerEvents;
     private PlayerEvents _playerEvents;
     private BoardHandler _boardHandler;
@@ -28,6 +29,7 @@ public class BootstrapBehaviour : MonoBehaviour
         _gameManager = new GameManager(_playerEvents, _boardHandler, _gameManagerEvents);
         _boardBehaviour.SetBoardHandlerEvents(_boardHandlerEvents);
         _boardBehaviour.SetBoardUIEventsHandler(_boardUIEventsHandler);
+        _againButtonBehavior.SetGameManagerEvents(_gameManagerEvents);
         _gameManager.StartGame();
     }
 

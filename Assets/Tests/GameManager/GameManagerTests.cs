@@ -256,4 +256,39 @@ public class GameManagerTests {
         Assert.AreEqual(PlayerMark.X, playerMark);
         Assert.AreEqual(EndGameCondition.Win, endGameCondition);
     }
+
+    [Test]
+    public void GameManagerRestartsOnGameRestartEvent() {
+        GameManagerEvents gameManagerEvents = new GameManagerEvents();
+        PlayerEvents playerEvents = new PlayerEvents();
+        BoardHandlerEvents boardHandlerEvents = new BoardHandlerEvents();
+        IMovementLogic movementLogic = new FreeEmptyCellMovementLogic();
+        BoardUIEventsHandler boardUIEventsHandler = new BoardUIEventsHandler();
+        HumanPlayerHandler humanPlayerHandler = new HumanPlayerHandler(boardUIEventsHandler, playerEvents);
+        BoardHandler boardHandler = new BoardHandler(boardHandlerEvents);
+        AIPlayerHandler aiPlayerHandler = new AIPlayerHandler(gameManagerEvents, boardHandler, playerEvents, movementLogic);
+        GameManager gameManager = new GameManager(playerEvents, boardHandler, gameManagerEvents);
+        var numberOfInvocations = 0;
+        var playerMark = default(PlayerMark);
+        var endGameCondition = default(EndGameCondition);
+        gameManagerEvents.OnEndGame += (gameCondition, player) => {
+            playerMark = player;
+            endGameCondition = gameCondition;
+            numberOfInvocations++;
+        };
+        gameManager.StartGame();
+        boardUIEventsHandler.CellClick(2);
+        boardUIEventsHandler.CellClick(5);
+        boardUIEventsHandler.CellClick(8);
+        Assert.AreEqual(1, numberOfInvocations);
+        Assert.AreEqual(PlayerMark.X, playerMark);
+        Assert.AreEqual(EndGameCondition.Win, endGameCondition);
+        gameManagerEvents.InvokeOnRestartGame();
+        boardUIEventsHandler.CellClick(2);
+        boardUIEventsHandler.CellClick(5);
+        boardUIEventsHandler.CellClick(8);
+        Assert.AreEqual(2, numberOfInvocations);
+        Assert.AreEqual(PlayerMark.X, playerMark);
+        Assert.AreEqual(EndGameCondition.Win, endGameCondition);
+    }
 }
